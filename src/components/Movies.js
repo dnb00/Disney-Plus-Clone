@@ -1,41 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { selectMovies } from '../features/movie/movieSlice';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function Movies() {
+  const movies = useSelector(selectMovies);
   return (
     <Container>
       <h4>Recommend for You</h4>
       <Content>
-        <Wrap>
-          <img
-            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
-            alt="movie 1"
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
-            alt="movie 2"
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
-            alt="movie 3"
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
-            alt="movie 4"
-          />
-        </Wrap>
-        <Wrap>
-          <img
-            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
-            alt="movie 5"
-          />
-        </Wrap>
+        {movies &&
+          movies.map((movie) => (
+            <Wrap key={movie.id}>
+              <Link to={`/detail/${movie.id}`}>
+                <img src={movie.cardImg} alt="movie 1" />
+              </Link>
+            </Wrap>
+          ))}
       </Content>
     </Container>
   );
@@ -43,7 +25,9 @@ function Movies() {
 
 export default Movies;
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-bottom: 20px;
+`;
 const Content = styled.div`
   display: grid;
   grid-gap: 25px;
