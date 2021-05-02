@@ -6,7 +6,7 @@ import Login from './components/Login';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <Router>
@@ -26,5 +26,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
