@@ -25,7 +25,9 @@ function Header(props) {
             photo: user.photoURL,
           })
         );
-        history.push('/');
+        history.push('/home');
+      } else {
+        history.push('/login');
       }
     });
   }, [dispatch, history]);
@@ -33,7 +35,7 @@ function Header(props) {
   const handleAuth = () => {
     auth.signInWithPopup(provider).then((result) => {
       setUser(result.user);
-      history.push('/');
+      history.push('/home');
     });
   };
 
