@@ -7,19 +7,34 @@ function Movies() {
       <h4>Recommend for You</h4>
       <Content>
         <Wrap>
-          <img src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg" />
+          <img
+            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
+            alt="movie 1"
+          />
         </Wrap>
         <Wrap>
-          <img src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg" />
+          <img
+            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
+            alt="movie 2"
+          />
         </Wrap>
         <Wrap>
-          <img src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg" />
+          <img
+            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
+            alt="movie 3"
+          />
         </Wrap>
         <Wrap>
-          <img src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg" />
+          <img
+            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
+            alt="movie 4"
+          />
         </Wrap>
         <Wrap>
-          <img src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg" />
+          <img
+            src="https://m.media-amazon.com/images/G/01/digital/video/Magellan_MLP/Noggin_Image.jpg"
+            alt="movie 5"
+          />
         </Wrap>
       </Content>
     </Container>
