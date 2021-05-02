@@ -1,20 +1,39 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { auth, provider } from '../firebase';
 import {
-  selectUserName,
   setUserLoginDetails,
+  selectUserPhoto,
+  setSignOutState,
 } from '../features/user/userSlice';
 
 function Header(props) {
   const dispatch = useDispatch();
-  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+  const history = useHistory();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLoginDetails({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        history.push('/');
+      }
+    });
+  }, [dispatch, history]);
 
   const handleAuth = () => {
     auth.signInWithPopup(provider).then((result) => {
       setUser(result.user);
+      history.push('/');
     });
   };
 
@@ -27,10 +46,17 @@ function Header(props) {
       })
     );
   };
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      dispatch(setSignOutState());
+      history.push('/login');
+    });
+  };
   return (
     <Nav>
       <Logo src="/images/logo.svg" />
-      {!userName ? (
+      {!userPhoto ? (
         <Login onClick={handleAuth}>Login</Login>
       ) : (
         <>
@@ -60,7 +86,7 @@ function Header(props) {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <UserImg src="https://yt3.ggpht.com/yti/ANoDKi4TV09VNG29XFQYIpx-bemV703Fa_unANGxEv5Sig=s88-c-k-c0x00ffffff-no-rj-mo" />
+          <UserImg onClick={signOut} src={userPhoto} />
         </>
       )}
     </Nav>
