@@ -1,38 +1,68 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { auth, provider } from '../firebase';
+import {
+  selectUserName,
+  setUserLoginDetails,
+} from '../features/user/userSlice';
 
-function Header() {
+function Header(props) {
+  const dispatch = useDispatch();
+  const userName = useSelector(selectUserName);
+
+  const handleAuth = () => {
+    auth.signInWithPopup(provider).then((result) => {
+      setUser(result.user);
+    });
+  };
+
+  const setUser = (user) => {
+    dispatch(
+      setUserLoginDetails({
+        name: user.displayName,
+        email: user.email,
+        photo: user.photoURL,
+      })
+    );
+  };
   return (
     <Nav>
       <Logo src="/images/logo.svg" />
-      <NavMenu>
-        <a>
-          <img src="/images/home-icon.svg" alt="home" />
-          <span>HOME</span>
-        </a>
-        <a>
-          <img src="/images/search-icon.svg" alt="search" />
-          <span>SEARCH</span>
-        </a>
-        <a>
-          <img src="/images/watchlist-icon.svg" alt="watchlist" />
-          <span>WATCHLIST</span>
-        </a>
-        <a>
-          <img src="/images/original-icon.svg" alt="original" />
-          <span>ORIGINALS</span>
-        </a>
-        <a>
-          <img src="/images/movie-icon.svg" alt="movie" />
-          <span>MOVIES</span>
-        </a>
-        <a>
-          <img src="/images/series-icon.svg" alt="series" />
-          <span>SERIES</span>
-        </a>
-      </NavMenu>
-      <UserImg src="https://yt3.ggpht.com/yti/ANoDKi4TV09VNG29XFQYIpx-bemV703Fa_unANGxEv5Sig=s88-c-k-c0x00ffffff-no-rj-mo" />
+      {!userName ? (
+        <Login onClick={handleAuth}>Login</Login>
+      ) : (
+        <>
+          <NavMenu>
+            <a>
+              <img src="/images/home-icon.svg" alt="home" />
+              <span>HOME</span>
+            </a>
+            <a>
+              <img src="/images/search-icon.svg" alt="search" />
+              <span>SEARCH</span>
+            </a>
+            <a>
+              <img src="/images/watchlist-icon.svg" alt="watchlist" />
+              <span>WATCHLIST</span>
+            </a>
+            <a>
+              <img src="/images/original-icon.svg" alt="original" />
+              <span>ORIGINALS</span>
+            </a>
+            <a>
+              <img src="/images/movie-icon.svg" alt="movie" />
+              <span>MOVIES</span>
+            </a>
+            <a>
+              <img src="/images/series-icon.svg" alt="series" />
+              <span>SERIES</span>
+            </a>
+          </NavMenu>
+          <UserImg src="https://yt3.ggpht.com/yti/ANoDKi4TV09VNG29XFQYIpx-bemV703Fa_unANGxEv5Sig=s88-c-k-c0x00ffffff-no-rj-mo" />
+        </>
+      )}
     </Nav>
   );
 }
@@ -45,6 +75,7 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   padding: 0 36px;
+  justify-content: space-between;
 `;
 
 const Logo = styled.img`
@@ -101,4 +132,21 @@ const UserImg = styled.img`
   height: 48px;
   border-radius: 50%;
   cursor: pointer;
+`;
+
+const Login = styled.a`
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: 1px solid #f9f9f9;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+    color: #000;
+    border-color: transparent;
+  }
 `;
